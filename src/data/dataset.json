@@ -1,0 +1,21 @@
+{
+    "serialNumber": 4,
+    "name": "Founder's Message",
+    "key": "founders-message",
+    "section": 
+        {
+            "type": "text",
+            "preHeading": "Who I'm: ",
+            "heading": "Pooja Sharma (Chief Managing Director)",
+            "description": {
+                "paragraphs" :[    
+                "Ms. Pooja Sharma began her career at a young age as a TV news anchor, where she rose to lea d programming in the national news and devotional channel categories. Alongside her anchoring career, she also acted in several popular TV serials and became a recognized face through more than 100 brand endorsements and television commercials. Lorem ipsum dolor sit amet, conse ctetuer adipiscing elit, sed diam nonum nibhie With her strong media background, she transitioned into entrepreneurship and dedicated her knowledge to building her own company - Pooja Movie Creations.",
+
+                "Under her leadership, the company has grown into one of India's No. 1 media and broadcast advertising companies, trusted by leading brands for high-impact television commercials and nationwide campaigns.She later became the Founder Chairperson of the National Justice and Women Safety Commission under the Government of India, where she actively works to protect women's rights and empower women nationwide"
+            ],
+            "imageURL":[
+                "https://res.cloudinary.com/dwujwvqkv/image/upload/v1760162782/founder_mujasa.jpg"
+            ]
+            }
+        }
+}
