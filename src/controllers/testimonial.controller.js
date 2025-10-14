@@ -17,31 +17,43 @@ export const getTestimonial = async (req, res) => {
   }
 };
 
+
+
 export const updateTestimonial = async (req, res) => {
   try {
-    const testimonialData = req.body;
-    let testimonial = await TestimonialSchema.findOne();
-    if (testimonial) {
-      testimonial = await TestimonialSchema.findByIdAndUpdate(testimonial._id, testimonialData, {
-        new: true,
+    const testimonialId = req.params.id;
+    const { img, heading, para } = req.body;
+
+    const updated = await TestimonialSchema.findOneAndUpdate(
+      { "items._id": testimonialId }, // find testimonial in items array
+      {
+        $set: {
+          "items.$.img": img,
+          "items.$.heading": heading,
+          "items.$.para": para,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: "Testimonial not found",
       });
-      return res.status(200).json({
-        success: true,
-        message: "Testimonial updated successfully",
-        testimonial
-      })
     }
-    testimonial = new TestimonialSchema(testimonialData);
-    await testimonial.save();
 
     res.status(200).json({
-      message: "Testimonials created",
-      testimonial,
+      success: true,
+      message: "Testimonial updated successfully",
+      data: updated,
     });
   } catch (error) {
+    console.error("Update error:", error);
     res.status(500).json({
-      error: error,
-      message: "Testimonials couldn't be updated",
+      success: false,
+      message: "Failed to update testimonial",
+      error: error.message,
     });
   }
 };

@@ -34,12 +34,12 @@ const uploadMultipleImages = async (req, res) => {
         message: "No files uploaded",
       });
     }
+
     const mediaItems = [];
+
     for (const file of req.files) {
       const result = await cloudinary.uploader.upload(file.path);
-      mediaItems.push({
-        url: result.secure_url,
-      });
+      mediaItems.push({ url: result.secure_url });
 
       try {
         fs.unlinkSync(file.path);
@@ -47,32 +47,57 @@ const uploadMultipleImages = async (req, res) => {
         console.warn("Temp file already deleted:", file.path);
       }
     }
-    // collection title
+
+    // 🧩 Extract title and key from request
+    const pageTitle = req.body.pageTitle || null;
+    const pageKey = req.body.pageKey || `untitled-page-${Date.now()}`;
+
+    // 📦 Collection
     const mediaCollection = {
       title: req.body.title || "Untitled collection",
       media: mediaItems,
     };
-    // page title
-    const mediaPage = new MediaPageSchema({
-      title: req.body.pageTitle || null,
-      key: req.body.pageKey || `untitled-page-${Date.now()}`,
-      content: [mediaCollection],
+
+    // 🔍 Check for existing page
+    let existingPage = await MediaPageSchema.findOne({
+      $or: [{ title: pageTitle }, { key: pageKey }],
     });
-    await mediaPage.save();
-    res.status(201).json({
-      success: true,
-      message: "Media page created successfully",
-      data: mediaPage,
-    });
+
+    if (existingPage) {
+      existingPage.content.push(mediaCollection);
+      await existingPage.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Media collection added to existing page",
+        data: existingPage,
+      });
+    } else {
+      // 🆕 Create new page if not found
+      const newMediaPage = new MediaPageSchema({
+        title: pageTitle,
+        key: pageKey,
+        content: [mediaCollection],
+      });
+
+      await newMediaPage.save();
+
+      return res.status(201).json({
+        success: true,
+        message: "Media page created successfully",
+        data: newMediaPage,
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "upload failed",
+      message: "Upload failed",
       error: error.message,
     });
   }
 };
+
 export { uploadMultipleImages };
 
 const deleteImage = async (req, res) => {
