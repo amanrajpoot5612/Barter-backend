@@ -51,7 +51,7 @@ barterRouter.route("/update-footer-item").patch(updateFooterItem);
 barterRouter.route("/get-testimonial").get(getTestimonial);
 
 // update testimonial route: admin
-barterRouter.route("/update-testimonial").post(updateTestimonial)
+barterRouter.route("/update-testimonial/:id").post(updateTestimonial)
 
 
 // update images: admin
