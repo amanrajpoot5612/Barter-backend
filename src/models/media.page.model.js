@@ -6,7 +6,7 @@ const MediaPageSchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
-            unique: true,
+            // unique: true,
         },
         key: {
             type: String,

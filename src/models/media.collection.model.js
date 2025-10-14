@@ -11,8 +11,9 @@ const MediaCollectionSchema = new mongoose.Schema(
             type: [MediaItemSchema],
             required: true
         },
-        altText:{
+        type:{
             type: String,
+            required: true
         }
     },
     {
