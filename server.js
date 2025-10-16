@@ -14,8 +14,8 @@ const app = express();
 // }
 const corsOptions = {
     origin: [
-        'https://pmc-barter.vercel.app/',
-        "https://barter-dashboard958045vflnvkf4593405vjcgbf.vercel.app/"
+        'https://pmc-barter.vercel.app',
+        "https://barter-dashboard958045vflnvkf4593405vjcgbf.vercel.app"
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Allow cookies to be sent
