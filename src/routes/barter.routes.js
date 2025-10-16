@@ -25,7 +25,7 @@ barterRouter.route("/navbar").get(getNavbar);
 barterRouter.route("/navbar").post(postNavbar);
 
 // update navbar item : admin
-barterRouter.patch("/item/:key", updateNavbarItem);
+barterRouter.route("/navbar/item/:_id").patch(updateNavbarItem);
 
 /* =================Footer routes===================== */
 

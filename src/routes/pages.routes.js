@@ -6,7 +6,7 @@ const pageRouter = e.Router();
 
 pageRouter.get('/get-pages', getPages);
 
-pageRouter.post("/update-pages", updatePages);
+pageRouter.patch("/update-pages", updatePages);
 
 pageRouter.post("/create-pages", createPages);
 
