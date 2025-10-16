@@ -12,7 +12,17 @@ const app = express();
 //   methods: ["GET", "POST", "PUT", "DELETE"],
 //   credentials: true
 // }
-app.use(cors());
+const corsOptions = {
+    origin: [
+        'https://pmc-barter.vercel.app/',
+        "https://barter-dashboard958045vflnvkf4593405vjcgbf.vercel.app/"
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies to be sent
+    optionsSuccessStatus: 204 // For preflight requests
+};
+
+app.use(cors(corsOptions))
 
 app.use(express.json());
 
@@ -20,14 +30,14 @@ mongoose.connect(mongodbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-.then(() => {
-    console.log(`Mongodb uri : ${mongodbURI}`);
-    console.log("Mongodb conneced");
-})
-.catch((err) => {
-    console.log(`Mongodb uri : ${mongodbURI}`);
-    console.log(err);
-})
+    .then(() => {
+        console.log(`Mongodb uri : ${mongodbURI}`);
+        console.log("Mongodb conneced");
+    })
+    .catch((err) => {
+        console.log(`Mongodb uri : ${mongodbURI}`);
+        console.log(err);
+    })
 
 app.listen(port || 5000, () => {
     console.log(`Server running at port = ${port}`);
@@ -37,7 +47,7 @@ app.get('/', (req, res) => {
     console.log(
         "hello",
     );
-    
+
     res.json({
         message: "Hello",
         statusCode: 200
